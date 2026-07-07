@@ -6,7 +6,7 @@ import emailjs from "@emailjs/browser";
 
 function Contact() {
 
-    const [esend , setEsend] = useState("")
+    const [esend, setEsend] = useState("")
     const form = useRef();
 
     const sendEmail = (e) => {
@@ -22,6 +22,11 @@ function Contact() {
             .then(() => {
                 setEsend("Message sent successfully!");
                 form.current.reset();
+                {
+                    setTimeout(() => {
+                        setEsend("");
+                    }, 2000);
+                }
             })
             .catch((error) => {
                 console.log(error);
@@ -143,7 +148,7 @@ function Contact() {
                                 Send Message
                             </button>
 
-                            {<h1>{esend}</h1>}
+                            <h1>{esend}</h1>
 
                         </form>
 
