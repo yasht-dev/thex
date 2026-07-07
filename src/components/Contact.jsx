@@ -1,9 +1,35 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { FaPhoneAlt, FaInstagram } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaWhatsapp } from "react-icons/fa";
+import emailjs from "@emailjs/browser";
 
 function Contact() {
+
+    const [esend , setEsend] = useState("")
+    const form = useRef();
+
+    const sendEmail = (e) => {
+        e.preventDefault();
+
+        emailjs
+            .sendForm(
+                "service_pfldenc",
+                "template_bp9acut",
+                form.current,
+                "KAVtnL9TyGS3-fN9p"
+            )
+            .then(() => {
+                setEsend("Message sent successfully!");
+                form.current.reset();
+            })
+            .catch((error) => {
+                console.log(error);
+                alert("Message failed!");
+            });
+    };
+
+
     return (
         <>
             <section
@@ -39,14 +65,14 @@ function Contact() {
 
                                 <p className="flex items-center gap-3">
                                     <FaPhoneAlt className="text-green-400" />
-                                    +91 987654321
+                                    +91 98********
                                 </p>
 
                                 <p className="flex items-center gap-3">
                                     <FaInstagram className="text-green-400" />
                                     <a href="https://www.instagram.com/thex_vision_?igsh=d3RjbDlzbWw4M3do" target="_blank">Thex_vision_</a>
                                 </p>
-                                <p className="flex items-center gap-3">
+                                {/* <p className="flex items-center gap-3">
                                     <FaWhatsapp className="text-green-400" />
                                     <a
                                         href="https://wa.me/919876543210"
@@ -55,7 +81,7 @@ function Contact() {
                                     >
                                         WhatsApp Chat
                                     </a>
-                                </p>
+                                </p> */}
 
                                 <p className="flex items-center gap-3">
                                     <FaLocationDot className="text-green-400" />
@@ -81,37 +107,43 @@ function Contact() {
 
 
 
-                        <form className="bg-[#0D2B2E] p-8 rounded-2xl border border-white/10 flex flex-col gap-4">
+                        <form className="bg-[#0D2B2E] p-8 rounded-2xl border border-white/10 flex flex-col gap-4" ref={form} onSubmit={sendEmail}>
 
                             <input
                                 type="text"
+                                name="name"
                                 placeholder="Your Name"
                                 className="bg-[#071A1C] border border-white/10 p-3 rounded-lg outline-none focus:border-green-400"
                             />
 
                             <input
                                 type="email"
+                                name="email"
                                 placeholder="Your Email"
                                 className="bg-[#071A1C] border border-white/10 p-3 rounded-lg outline-none focus:border-green-400"
                             />
 
                             <input
                                 type="text"
+                                name="subject"
                                 placeholder="Project Type"
                                 className="bg-[#071A1C] border border-white/10 p-3 rounded-lg outline-none focus:border-green-400"
                             />
 
                             <textarea
+                                name="message"
                                 rows="5"
                                 placeholder="Your Message"
                                 className="bg-[#071A1C] border border-white/10 p-3 rounded-lg outline-none focus:border-green-400"
                             />
 
-                            <button
+                            <button type="submit"
                                 className="bg-green-500 text-black py-3 rounded-lg font-semibold hover:bg-green-400 transition"
                             >
                                 Send Message
                             </button>
+
+                            {<h1>{esend}</h1>}
 
                         </form>
 
